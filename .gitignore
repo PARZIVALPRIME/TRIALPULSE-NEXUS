@@ -1,0 +1,49 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files (large)
+data/processed/
+data/outputs/
+*.parquet
+*.pkl
+*.npy
+
+# Databases (will be regenerated)
+*.db
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Models (large, will be regenerated)
+models/
+
+# Temp
+tmp/
+temp/

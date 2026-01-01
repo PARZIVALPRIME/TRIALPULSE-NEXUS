@@ -1,0 +1,23 @@
+# TRIALPULSE NEXUS 10X - Dashboard Dependencies
+# Phase 7.1: Streamlit Dashboard
+
+# Core Dashboard
+streamlit>=1.29.0
+plotly>=5.18.0
+
+# Data Processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Additional UI Components
+streamlit-option-menu>=0.3.6
+streamlit-extras>=0.3.5
+
+# Export Support (already installed from Phase 6)
+# python-docx>=0.8.11
+# python-pptx>=0.6.21
+# xhtml2pdf>=0.2.11
+# reportlab>=4.0.0
+
+# Utilities
+python-dateutil>=2.8.2
