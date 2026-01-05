@@ -21,6 +21,7 @@ PAGES = {
     "Study Lead Command": {"icon": "🎯", "description": "Study oversight and decisions"},
     "Site Portal": {"icon": "🏥", "description": "Site-specific actions and status"},
     "Coder Workbench": {"icon": "🔤", "description": "Medical coding queue"},
+    "Collaboration Hub": {"icon": "🤝", "description": "Investigation rooms and team collaboration"},
     "Cascade Explorer": {"icon": "🌊", "description": "Issue dependency visualization"},
     "AI Assistant": {"icon": "🤖", "description": "Natural language queries"},
     "Reports": {"icon": "📄", "description": "Generate and download reports"},

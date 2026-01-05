@@ -163,6 +163,10 @@ def render_main_content(user: dict):
         from dashboard.pages.coder_view import render_page
         render_page(user)
     
+    elif current_page == 'Collaboration Hub':
+        from dashboard.pages.collaboration_hub import render_page
+        render_page(user)
+    
     elif current_page == 'Cascade Explorer':
         from dashboard.pages.cascade_explorer import render_page
         render_page(user)

@@ -146,9 +146,11 @@ class StudyLeadDataLoader:
             path = self.base_path / "analytics" / "patient_dblock_status.parquet"
             if path.exists():
                 df = pd.read_parquet(path)
-                # Keep only essential columns
-                keep_cols = [c for c in ['patient_key', 'site_id', 'study_id', 'dblock_ready', 'is_dblock_ready', 
-                                         'dblock_eligible', 'is_dblock_eligible'] if c in df.columns]
+                # Keep only essential columns - include all variations
+                keep_cols = [c for c in ['patient_key', 'site_id', 'study_id', 
+                                         'dblock_tier1_ready', 'db_lock_tier1_ready', 'dblock_ready', 'is_dblock_ready',
+                                         'dblock_eligible', 'db_lock_eligible', 'is_dblock_eligible',
+                                         'dblock_blocker_count'] if c in df.columns]
                 return df[keep_cols] if keep_cols else pd.DataFrame()
             return pd.DataFrame()
         return self._get_cached('dblock_status', loader)
@@ -205,10 +207,14 @@ class StudyLeadDataLoader:
             if tier2_col:
                 metrics['tier2_clean_rate'] = clean[tier2_col].mean() * 100
         
-        # DB Lock ready
+        # DB Lock ready - check for all column variations
         if not dblock.empty:
-            ready_col = self._find_column(dblock, ['dblock_ready', 'is_dblock_ready', 'db_lock_ready', 'is_db_lock_ready'])
-            eligible_col = self._find_column(dblock, ['dblock_eligible', 'is_dblock_eligible', 'db_lock_eligible', 'is_db_lock_eligible'])
+            ready_col = self._find_column(dblock, [
+                'dblock_tier1_ready', 'db_lock_tier1_ready', 'dblock_ready', 'is_dblock_ready', 'db_lock_ready', 'is_db_lock_ready'
+            ])
+            eligible_col = self._find_column(dblock, [
+                'dblock_eligible', 'db_lock_eligible', 'is_dblock_eligible', 'is_db_lock_eligible'
+            ])
             
             if ready_col:
                 if eligible_col:
@@ -295,7 +301,9 @@ class StudyLeadDataLoader:
                     # Get dblock rate for this region
                     dblock_rate = 25.0
                     if not dblock.empty and 'patient_key' in dblock.columns:
-                        ready_col = self._find_column(dblock, ['dblock_ready', 'is_dblock_ready', 'db_lock_ready', 'is_db_lock_ready'])
+                        ready_col = self._find_column(dblock, [
+                            'dblock_tier1_ready', 'db_lock_tier1_ready', 'dblock_ready', 'is_dblock_ready', 'db_lock_ready', 'is_db_lock_ready'
+                        ])
                         if ready_col:
                             region_patient_keys = upr.loc[region_mask, 'patient_key'] if 'patient_key' in upr.columns else pd.Series()
                             if not region_patient_keys.empty:
@@ -365,8 +373,12 @@ class StudyLeadDataLoader:
         }
         
         if not dblock.empty:
-            ready_col = self._find_column(dblock, ['dblock_ready', 'is_dblock_ready', 'db_lock_ready', 'is_db_lock_ready'])
-            eligible_col = self._find_column(dblock, ['dblock_eligible', 'is_dblock_eligible', 'db_lock_eligible', 'is_db_lock_eligible'])
+            ready_col = self._find_column(dblock, [
+                'dblock_tier1_ready', 'db_lock_tier1_ready', 'dblock_ready', 'is_dblock_ready', 'db_lock_ready', 'is_db_lock_ready'
+            ])
+            eligible_col = self._find_column(dblock, [
+                'dblock_eligible', 'db_lock_eligible', 'is_dblock_eligible', 'is_db_lock_eligible'
+            ])
             
             if ready_col:
                 if eligible_col:

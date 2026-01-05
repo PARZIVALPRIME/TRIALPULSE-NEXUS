@@ -141,10 +141,10 @@ class ExecutiveDataLoader:
         dblock = self.load_dblock_status()
         if dblock is not None:
             ready_col = self._find_column(dblock, [
-                'dblock_tier1_ready', 'dblock_ready', 'db_lock_ready', 'ready', 'is_ready'
+                'dblock_tier1_ready', 'db_lock_tier1_ready', 'dblock_ready', 'db_lock_ready', 'ready', 'is_ready'
             ])
             eligible_col = self._find_column(dblock, [
-                'dblock_is_eligible', 'dblock_eligible', 'db_lock_eligible', 'eligible', 'is_eligible'
+                'dblock_eligible', 'db_lock_eligible', 'dblock_is_eligible', 'db_lock_eligible', 'eligible', 'is_eligible'
             ])
             blocker_col = self._find_column(dblock, ['dblock_blocker_count', 'blocker_count'])
             
@@ -266,10 +266,10 @@ class ExecutiveDataLoader:
         # Add DB lock
         if dblock is not None and 'study_id' in dblock.columns:
             ready_col = self._find_column(dblock, [
-                'dblock_tier1_ready', 'dblock_ready', 'db_lock_ready', 'ready'
+                'dblock_tier1_ready', 'db_lock_tier1_ready', 'dblock_ready', 'db_lock_ready', 'ready'
             ])
             eligible_col = self._find_column(dblock, [
-                'dblock_is_eligible', 'dblock_eligible', 'db_lock_eligible', 'eligible'
+                'dblock_eligible', 'db_lock_eligible', 'dblock_is_eligible', 'eligible'
             ])
             blocker_col = self._find_column(dblock, ['dblock_blocker_count', 'blocker_count'])
             
