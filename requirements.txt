@@ -1,5 +1,5 @@
 # =============================================================================
-# TRIALPULSE NEXUS 10X - Requirements
+# TRIALPULSE NEXUS 10X - Requirements (Streamlit Cloud Compatible)
 # =============================================================================
 
 # Core Data
@@ -7,6 +7,7 @@ pandas
 numpy
 scipy
 openpyxl
+pyarrow
 
 # Dashboard
 streamlit
@@ -14,28 +15,19 @@ plotly
 matplotlib
 seaborn
 
-# Machine Learning
+# Machine Learning (Streamlit Cloud compatible)
 scikit-learn
 xgboost
 lightgbm
-shap
 imbalanced-learn
-
-# Deep Learning (optional - comment out for lighter deployment)
-# tensorflow
 
 # Graph/Network
 networkx
 
 # LLM Integration
-ollama
 groq
 langgraph
 pydantic
-
-# NLP/Embeddings
-sentence-transformers
-chromadb
 
 # Utilities
 python-dotenv
@@ -43,8 +35,7 @@ loguru
 tqdm
 jinja2
 
-# Document Generation
+# Document Generation (lightweight)
 python-docx
 python-pptx
 reportlab
-xhtml2pdf
