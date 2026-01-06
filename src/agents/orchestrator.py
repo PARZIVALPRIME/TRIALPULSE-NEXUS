@@ -132,8 +132,8 @@ Current Data Summary:
 - Total Patients: {context_info.get('total_patients', 'N/A')}
 - Studies: {context_info.get('total_studies', 'N/A')}
 - Sites: {context_info.get('total_sites', 'N/A')}
-- Avg DQI: {context_info.get('avg_dqi', 'N/A'):.1f}
-- Tier 1 Clean Rate: {context_info.get('tier1_clean_rate', 'N/A'):.1f}%
+- Avg DQI: {context_info.get('avg_dqi', 0):.1f}
+- Tier 1 Clean Rate: {context_info.get('tier1_clean_rate', 0):.1f}%
 - DB Lock Ready: {context_info.get('db_lock_ready', 'N/A')}
 
 Provide a brief analysis of what the user needs."""
@@ -358,9 +358,9 @@ Guidelines:
 
 Current Status:
 - DB Lock Ready: {projection_data['dblock'].get('ready_now', 'N/A')}
-- Ready Rate: {projection_data['dblock'].get('ready_rate', 'N/A'):.1f}%
+- Ready Rate: {projection_data['dblock'].get('ready_rate', 0):.1f}%
 - Eligible Patients: {projection_data['dblock'].get('eligible_patients', 'N/A')}
-- Overall Tier 1 Clean: {projection_data['overall'].get('tier1_clean_rate', 'N/A'):.1f}%
+- Overall Tier 1 Clean: {projection_data['overall'].get('tier1_clean_rate', 0):.1f}%
 
 Previous Analysis:
 {state.investigation_notes[:500] if state.investigation_notes else 'None'}

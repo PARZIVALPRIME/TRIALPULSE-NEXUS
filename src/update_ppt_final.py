@@ -1,14 +1,15 @@
 import base64
 from pathlib import Path
 
-# Configuration
-OUTPUT_FILE = Path(r"d:\trialpulse_nexus\ppt.html")
+# Configuration - use relative paths from this file's location
+PROJECT_ROOT = Path(__file__).parent.parent.resolve()
+OUTPUT_FILE = PROJECT_ROOT / "ppt.html"
 
 IMAGES = {
-    "issue_detector": r"d:\trialpulse_nexus\data\outputs\issue_detector_PRODUCTION_v3\figures\8_summary_infographic.png",
-    "resolution_time": r"d:\trialpulse_nexus\data\outputs\resolution_time_PRODUCTION_v3\figures\8_summary_infographic.png",
-    "site_ranker": r"d:\trialpulse_nexus\data\outputs\site_risk_ranker_OPTIMIZED_v2\figures\8_summary.png",
-    "anomaly_detector": r"d:\trialpulse_nexus\data\outputs\anomaly_detector_OPTIMIZED_v2\figures\8_summary.png"
+    "issue_detector": PROJECT_ROOT / "data" / "outputs" / "issue_detector_PRODUCTION_v3" / "figures" / "8_summary_infographic.png",
+    "resolution_time": PROJECT_ROOT / "data" / "outputs" / "resolution_time_PRODUCTION_v3" / "figures" / "8_summary_infographic.png",
+    "site_ranker": PROJECT_ROOT / "data" / "outputs" / "site_risk_ranker_OPTIMIZED_v2" / "figures" / "8_summary.png",
+    "anomaly_detector": PROJECT_ROOT / "data" / "outputs" / "anomaly_detector_OPTIMIZED_v2" / "figures" / "8_summary.png"
 }
 
 # Helper to encode image

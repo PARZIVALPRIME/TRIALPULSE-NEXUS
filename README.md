@@ -35,6 +35,39 @@ streamlit run dashboard/app.py
 
 Open browser at: **http://localhost:8501**
 
+> **Note:** On first run, the dashboard will automatically run all data pipelines (~2-3 minutes).
+
+---
+
+## 🚀 Streamlit Cloud Deployment
+
+### Option 1: Deploy via Streamlit Cloud (Recommended)
+
+1. **Push to GitHub** (already done)
+
+2. **Go to [share.streamlit.io](https://share.streamlit.io)**
+
+3. **Deploy from GitHub:**
+   - Repository: `PARZIVALPRIME/ff`
+   - Branch: `main`
+   - Main file: `dashboard/app.py`
+
+4. **Configure Secrets** (in Streamlit Cloud dashboard):
+   ```toml
+   LLM_PRIMARY_PROVIDER = "groq"
+   GROQ_API_KEY = "your-groq-api-key"
+   ```
+
+5. **First Load:** Dashboard will automatically run all 8 data pipelines from raw data (~2-3 min).
+
+### Option 2: Local with Groq
+
+Create `.env` file in project root:
+```
+LLM_PRIMARY_PROVIDER=groq
+GROQ_API_KEY=your-groq-api-key
+```
+
 ---
 
 ## Project Structure

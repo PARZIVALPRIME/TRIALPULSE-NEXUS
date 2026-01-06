@@ -1,0 +1,50 @@
+# =============================================================================
+# TRIALPULSE NEXUS 10X - Requirements
+# =============================================================================
+
+# Core Data
+pandas
+numpy
+scipy
+openpyxl
+
+# Dashboard
+streamlit
+plotly
+matplotlib
+seaborn
+
+# Machine Learning
+scikit-learn
+xgboost
+lightgbm
+shap
+imbalanced-learn
+
+# Deep Learning (optional - comment out for lighter deployment)
+# tensorflow
+
+# Graph/Network
+networkx
+
+# LLM Integration
+ollama
+groq
+langgraph
+pydantic
+
+# NLP/Embeddings
+sentence-transformers
+chromadb
+
+# Utilities
+python-dotenv
+loguru
+tqdm
+jinja2
+
+# Document Generation
+python-docx
+python-pptx
+reportlab
+xhtml2pdf

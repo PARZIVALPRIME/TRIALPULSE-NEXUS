@@ -4,9 +4,37 @@ Phase 5.1: LLM Setup
 """
 
 import os
+from pathlib import Path
 from dataclasses import dataclass, field
 from typing import Optional, Dict, Any
 from enum import Enum
+
+# Load .env file if it exists
+try:
+    from dotenv import load_dotenv
+    env_path = Path(__file__).parent.parent / ".env"
+    if env_path.exists():
+        load_dotenv(env_path)
+except ImportError:
+    pass  # python-dotenv not installed, use system env vars
+
+# Also try to load from Streamlit secrets (for Streamlit Cloud deployment)
+def get_secret(key: str, default: str = None) -> Optional[str]:
+    """Get secret from environment or Streamlit secrets."""
+    # First check environment variables
+    value = os.getenv(key)
+    if value:
+        return value
+    
+    # Then check Streamlit secrets (for cloud deployment)
+    try:
+        import streamlit as st
+        if hasattr(st, 'secrets') and key in st.secrets:
+            return st.secrets[key]
+    except Exception:
+        pass
+    
+    return default
 
 
 class LLMProvider(Enum):
@@ -123,18 +151,22 @@ def get_config() -> LLMConfig:
     """Get LLM configuration with environment overrides"""
     config = LLMConfig()
     
-    if os.getenv("OLLAMA_HOST"):
-        config.ollama.host = os.getenv("OLLAMA_HOST")
+    if get_secret("OLLAMA_HOST"):
+        config.ollama.host = get_secret("OLLAMA_HOST")
     
-    if os.getenv("OLLAMA_MODEL"):
-        config.ollama.model = os.getenv("OLLAMA_MODEL")
+    if get_secret("OLLAMA_MODEL"):
+        config.ollama.model = get_secret("OLLAMA_MODEL")
     
-    if os.getenv("GROQ_API_KEY"):
-        config.groq.api_key = os.getenv("GROQ_API_KEY")
+    if get_secret("GROQ_API_KEY"):
+        config.groq.api_key = get_secret("GROQ_API_KEY")
     
-    if os.getenv("LLM_PRIMARY_PROVIDER"):
-        provider = os.getenv("LLM_PRIMARY_PROVIDER").lower()
+    if get_secret("GROQ_MODEL"):
+        config.groq.model = get_secret("GROQ_MODEL")
+    
+    if get_secret("LLM_PRIMARY_PROVIDER"):
+        provider = get_secret("LLM_PRIMARY_PROVIDER").lower()
         if provider == "groq":
             config.primary_provider = LLMProvider.GROQ
+            config.fallback_provider = LLMProvider.OLLAMA
     
     return config

@@ -15,6 +15,50 @@ from datetime import datetime
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+# =============================================================================
+# DATA INITIALIZATION (for Streamlit Cloud deployment)
+# =============================================================================
+
+def check_and_initialize_data():
+    """Check if data exists, run pipelines if not."""
+    analytics_dir = PROJECT_ROOT / "data" / "processed" / "analytics"
+    required_files = [
+        "patient_dqi_enhanced.parquet",
+        "patient_clean_status.parquet", 
+        "patient_dblock_status.parquet",
+        "site_benchmarks.parquet"
+    ]
+    
+    # Check if data exists
+    data_exists = analytics_dir.exists() and all(
+        (analytics_dir / f).exists() for f in required_files
+    )
+    
+    if not data_exists:
+        st.info("🔄 First-time setup: Initializing data pipelines... This may take a few minutes.")
+        
+        with st.spinner("Running data pipelines..."):
+            try:
+                from initialize_data import initialize_data
+                success = initialize_data()
+                if success:
+                    st.success("✅ Data initialization complete! Refreshing...")
+                    st.rerun()
+                else:
+                    st.warning("⚠️ Some pipelines failed. Dashboard may have limited data.")
+            except Exception as e:
+                st.error(f"❌ Data initialization failed: {e}")
+                st.info("Please check if raw data files exist in data/raw/")
+                return False
+    return True
+
+# Run data check before anything else (cached to run once per session)
+@st.cache_resource
+def _init_data_once():
+    return check_and_initialize_data()
+
+# =============================================================================
+
 from dashboard.config.theme import apply_theme, get_theme_css
 from dashboard.config.auth import check_authentication, get_current_user, logout
 from dashboard.config.session import initialize_session, get_session_stats
@@ -53,6 +97,11 @@ def main():
     
     # Apply theme
     apply_theme()
+    
+    # Check and initialize data (runs pipelines if needed - for Streamlit Cloud)
+    if not _init_data_once():
+        st.error("Failed to initialize data. Please check logs.")
+        return
     
     # Check authentication
     if not check_authentication():
